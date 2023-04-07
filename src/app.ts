@@ -7,7 +7,7 @@ import { HttpService } from './repositories/httpService';
 
 export async function getFreeGames(locale: ILocale) {
     const API_BASE_URL = 'https://store-site-backend-static-ipv4.ak.epicgames.com/'
-    const httpService = new HttpService;
+    const httpService = new HttpService();
     const response = await httpService.get(`${API_BASE_URL}freeGamesPromotions?locale=${locale.language}&country=${locale.countryCode}&allowCountries=${locale.countryCode}`);
     return response.reduce((previousValue: Array<ResultEpic>, currentValue) => {
         const resultEpic = ResultEpic.fromJSON(currentValue);
