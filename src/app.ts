@@ -6,9 +6,9 @@ import { ResultEpic } from './utils/resultEpic_mapper';
 import { HttpService } from './repositories/httpService';
 
 export async function getFreeGames(locale: ILocale) {
-    const api = `https://store-site-backend-static-ipv4.ak.epicgames.com/freeGamesPromotions?locale=${locale.language}&country=${locale.countryCode}&allowCountries=${locale.countryCode}`
+    const API_BASE_URL = 'https://store-site-backend-static-ipv4.ak.epicgames.com/'
     const httpService = new HttpService;
-    const response = await httpService.get(api);
+    const response = await httpService.get(`${API_BASE_URL}freeGamesPromotions?locale=${locale.language}&country=${locale.countryCode}&allowCountries=${locale.countryCode}`);
     return response.reduce((previousValue: Array<ResultEpic>, currentValue) => {
         const resultEpic = ResultEpic.fromJSON(currentValue);
         if (resultEpic.data.price.totalPrice.discountPrice == 0 && resultEpic.data.price.totalPrice.discount > 0) {
